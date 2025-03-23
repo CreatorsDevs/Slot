@@ -44,3 +44,6 @@ TagManager:
   - name: GameCanvas
     uniqueID: 2153120209
     locked: 0
+  - name: LoadingCanvas
+    uniqueID: 1663393967
+    locked: 0
