@@ -5,6 +5,8 @@ namespace FSM.GameState
 {
     public class NormalState : BaseState
     {
+        private bool isSlamStop;
+
         public NormalState(GamePlayStateMachine gamestatemachine) : base(gamestatemachine) { }
         private StateName _nextStateName;
         public override void Enter()
@@ -15,7 +17,9 @@ namespace FSM.GameState
         }
         private void SubscribeEvents()
         {
+            EventManager.SpinResponseEvent += OnSpinDataFetched;
             EventManager.SpinButtonClickedEvent += OnSpinClick;
+            EventManager.OnAllReelStopppedEvent += CheckPaylines;
         }
 
         private void OnSpinClick()
@@ -23,6 +27,18 @@ namespace FSM.GameState
 
         }
 
+        private void OnSpinDataFetched()
+        {
+            isSlamStop = false;
+            ReelManager.Instance.OnSpinDataFetched();
+        }
+
+        private void CheckPaylines() => _gameStateMachine.StartCoroutine(CheckPaylinesRoutine());
+
+        private IEnumerator CheckPaylinesRoutine()
+        {
+            yield return null;
+        }
         public override void Exit()
         {
             GameManager.IsSlamStop = false;
@@ -32,7 +48,9 @@ namespace FSM.GameState
 
         private void UnSubscribeEvents()
         {
-            EventManager.SpinButtonClickedEvent += OnSpinClick;
+            EventManager.SpinResponseEvent += OnSpinDataFetched;
+            EventManager.SpinButtonClickedEvent -= OnSpinClick;
+            EventManager.OnAllReelStopppedEvent -= CheckPaylines;
         }
     }
 }

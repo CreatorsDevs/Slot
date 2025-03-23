@@ -51,6 +51,7 @@ public class UIManager : MonoBehaviour
     private void SubscribeEvents()
     {
         EventManager.BalanceAmountDeductionEvent += BalanceDeduction;
+        EventManager.DisableSlamStopEvent += DisableSlamStopButton;
     }
 
     public void SetInitialBalance()
@@ -116,9 +117,16 @@ public class UIManager : MonoBehaviour
         portraitAvailableBalance.text = balance.ToString("F2");
     }
 
+    public void DisableSlamStopButton()
+    {
+        landscapeSlamStopButton.interactable = false;
+        portraitSlamStopButton.interactable = false;
+    }
+
     private void UnSubscribeEvents()
     {
         EventManager.BalanceAmountDeductionEvent += BalanceDeduction;
+        EventManager.DisableSlamStopEvent -= DisableSlamStopButton;
     }
 
     private void OnDisable()

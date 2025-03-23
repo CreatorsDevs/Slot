@@ -14,6 +14,10 @@ public class EventManager
     public static Action<double> UpdateCurrentBetEvent;
     public static Action OnSpinClickedEvent;
     public static Action SpinButtonClickedEvent;
+    public static Action DisableSlamStopEvent;
+    public static Action OnAllReelStopppedEvent;
+    public static Action SpinResponseEvent;
+
 
     // Game Economy Actions
     public static Action<int> UpdateCreditValueIndexEvent;
@@ -48,5 +52,16 @@ public class EventManager
     public static void InvokeUpdateBalanceAmount()
     {
         BalanceAmountDeductionEvent();
+    }
+
+    public static void InvokeDisableSlamStop()
+    {
+        DisableSlamStopEvent?.Invoke();
+    }
+    public static void InvokeOnAllReelStoppped() => OnAllReelStopppedEvent?.Invoke();
+
+    public static void InvokeSpinResponse()
+    {
+        SpinResponseEvent();
     }
 }

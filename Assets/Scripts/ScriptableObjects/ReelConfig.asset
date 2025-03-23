@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd7c9efc41880fb43902118f3f66d343, type: 3}
   m_Name: ReelConfig
   m_EditorClassIdentifier: 
-  Rows: 0
-  Columns: 0
-  RotationSpeed: 0
-  AnticipateRotation: 0
-  ReelRotationOffset: 0
-  SpinAnticipationDuration: 0
-  SpinStopDelay: 0
+  Rows: 3
+  Columns: 5
+  RotationSpeed: 33
+  AnticipateRotation: 1
+  ReelRotationOffset: 0.25
+  SpinAnticipationDuration: 0.2
+  SpinStopDelay: 1

@@ -28,6 +28,7 @@ public class GameManager : MonoSingleton<GameManager>
 
     private void Start()
     {
+        symbolPool.CreateSymbolPool();
         StartGame();
     }
 
@@ -35,6 +36,7 @@ public class GameManager : MonoSingleton<GameManager>
     {
         uiManager.SetInitialBalance();
         StartCoroutine(loadingBar.MoveSliderRandomly());
+        reelManager.SetReels();
     }
 
     public void OnSpinClicked()

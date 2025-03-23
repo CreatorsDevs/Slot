@@ -12,10 +12,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abb76e0ad0e7f0441b6faedf34e79bfb, type: 3}
   m_Name: SystemConfig
   m_EditorClassIdentifier: 
-  ShowPaylineDuration: 0
-  ShowFlashPaylineDuration: 0
-  ShowPaylinesInLoop: 0
-  ScatterId: 0
-  AnticipateScatter: 0
-  AnticipationDuration: 0
-  BonusId: 0
+  SymbolPrefabs:
+  - {fileID: 280702227050254806, guid: 091cec907308f7644a688dff13420bf8, type: 3}
+  - {fileID: 6538538134936462169, guid: 90f22e6366679cd4bb89c5ad287ef180, type: 3}
+  - {fileID: 3930489560106031580, guid: 03f015f280359954f832994acbb60e47, type: 3}
+  - {fileID: 8048615737345090807, guid: b01d59cdf218d9a449803fd20111b6ec, type: 3}
+  - {fileID: 5888529702694871130, guid: dd9055633deb70c46a76a7ec3ff6de2d, type: 3}
+  - {fileID: 3121752093847178277, guid: 7e16343015f2df14c9f97839b02e8e81, type: 3}
+  - {fileID: 4247712055209797352, guid: 566a9de2bc191be4196ce5f01f0a0e60, type: 3}
+  - {fileID: 3826946347268491419, guid: 9d309ecaaf4730d42bcd78123b89490f, type: 3}
+  - {fileID: 8814223955506836606, guid: cf6d63958d7c4a445a55504d4bdad6fe, type: 3}
+  - {fileID: 4188894600861540476, guid: de11e1d5c9bd23e4ca3df9b597e27cc2, type: 3}
+  - {fileID: -1704462958284473629, guid: 049f3f1a78b01b54fb6d3b6bdd2f8f66, type: 3}
+  - {fileID: 428111342684094609, guid: 8a1a5eed2f2b0324580988a692454935, type: 3}
+  ShowPaylineDuration: 2
+  ShowFlashPaylineDuration: 0.5
+  ShowPaylinesInLoop: 1
+  ScatterId: 10
+  AnticipateScatter: 1
+  AnticipationDuration: 3
+  BonusId: 11
