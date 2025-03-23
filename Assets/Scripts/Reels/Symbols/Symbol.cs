@@ -8,6 +8,8 @@ public class Symbol : MonoBehaviour
     private int _symbolID;
     [HideInInspector] public bool isSpecialSymbol;
 
+    [SerializeField] private SymbolsAnimationController symbolsAnimationController;
+
     public int SymbolID { get => _symbolID; set => _symbolID = value; }
 
     private void Start()
@@ -15,10 +17,15 @@ public class Symbol : MonoBehaviour
         HideWin();
     }
 
-    public void ShowWin()
+    public void ShowWin(PayLineState paylinestate)
     {
         spriteNode.SetActive(false);
         spineNode.SetActive(true);
+
+        if (symbolsAnimationController != null)
+        {
+            symbolsAnimationController.ManageSymbolAnimForPaylineState(paylinestate, IsSpecialSymbol());
+        }
     }
 
     private bool IsSpecialSymbol()
