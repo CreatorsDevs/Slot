@@ -161,7 +161,7 @@ namespace AutoLetterbox
     [System.Serializable]
     public class ForceCameraRatio : MonoBehaviour
     {
-        public Vector2 ratio = new Vector2(16, 9);
+        public Vector2 ratio;
         public bool forceRatioOnAwake = true;
         public bool listenForWindowChanges = true;
         public bool createCameraForLetterBoxRendering = true;
@@ -171,7 +171,10 @@ namespace AutoLetterbox
         public List<CameraRatio> cameras;
 
         public Camera letterBoxCamera;
-
+        private void OnEnable()
+        {
+            EventManager.OnOrientationChangeEvent += OrientationChange;
+        }
         private void Start()
         {
             // If no cameras have been assigned in editor, search for cameras in the scene
@@ -335,6 +338,16 @@ namespace AutoLetterbox
                 cameras = new List<CameraRatio>();
             }
             return cameras.ToArray();
+        }
+        
+        public void OrientationChange(int x, int y)
+        {
+            ratio = new Vector2(x, y);
+        }
+
+        public void OnDisable()
+        {
+            EventManager.OnOrientationChangeEvent -= OrientationChange;
         }
     }
 }
