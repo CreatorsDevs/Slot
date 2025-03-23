@@ -5,7 +5,7 @@ namespace FSM.GameState
 {
     public class NormalState : BaseState
     {
-        public NormalState(GameStateMachine gamestatemachine) : base(gamestatemachine) { }
+        public NormalState(GamePlayStateMachine gamestatemachine) : base(gamestatemachine) { }
         private StateName _nextStateName;
         public override void Enter()
         {
@@ -15,8 +15,14 @@ namespace FSM.GameState
         }
         private void SubscribeEvents()
         {
+            EventManager.SpinButtonClickedEvent += OnSpinClick;
         }
-        
+
+        private void OnSpinClick()
+        {
+
+        }
+
         public override void Exit()
         {
             GameManager.IsSlamStop = false;
@@ -26,6 +32,7 @@ namespace FSM.GameState
 
         private void UnSubscribeEvents()
         {
+            EventManager.SpinButtonClickedEvent += OnSpinClick;
         }
     }
 }

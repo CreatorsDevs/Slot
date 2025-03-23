@@ -5,7 +5,7 @@ namespace FSM.GameState
 {
     public class ScatterState : BaseState
     {
-        public ScatterState(GameStateMachine gamestatemachine) : base(gamestatemachine)
+        public ScatterState(GamePlayStateMachine gamestatemachine) : base(gamestatemachine)
         { }
 
         public override void Enter()

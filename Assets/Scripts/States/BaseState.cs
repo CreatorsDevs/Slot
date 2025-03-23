@@ -2,9 +2,9 @@ using FSM;
 
 public abstract class BaseState : State
 {
-    protected GameStateMachine _gameStateMachine;
+    protected GamePlayStateMachine _gameStateMachine;
 
-    public BaseState(GameStateMachine gamestatemachine)
+    public BaseState(GamePlayStateMachine gamestatemachine)
     {
         _gameStateMachine = gamestatemachine;
     }

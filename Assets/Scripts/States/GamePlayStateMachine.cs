@@ -1,7 +1,7 @@
 using FSM;
 using FSM.GameState;
 
-public class GameStateMachine : StateMachine
+public class GamePlayStateMachine : StateMachine
 
 {
     #region states

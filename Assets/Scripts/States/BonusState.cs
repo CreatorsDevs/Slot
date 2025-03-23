@@ -2,7 +2,7 @@ namespace FSM.GameState
 {
     public class BonusState : BaseState
     {
-        public BonusState(GameStateMachine gamestatemachine) : base(gamestatemachine) { }
+        public BonusState(GamePlayStateMachine gamestatemachine) : base(gamestatemachine) { }
 
         public override void Enter()
         {
