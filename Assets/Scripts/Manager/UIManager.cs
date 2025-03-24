@@ -52,6 +52,8 @@ public class UIManager : MonoBehaviour
     {
         EventManager.BalanceAmountDeductionEvent += BalanceDeduction;
         EventManager.DisableSlamStopEvent += DisableSlamStopButton;
+        EventManager.SetButtonForSpinEvent += SetButtonForStartingSpin;
+        EventManager.OnClickResetDataEvent += ResetWinAndDisableSlamStop;
     }
 
     public void SetInitialBalance()
@@ -94,6 +96,11 @@ public class UIManager : MonoBehaviour
         portraitDownBtn.interactable = enable;
     }
 
+    private void SetButtonForStartingSpin()
+    {
+        SetButton(false);
+    }
+
     public void ResetWinAndDisableSlamStop() // Contains Button Edge Cases
     {
         landscapeWinAmount.text = "0.00";
@@ -127,6 +134,8 @@ public class UIManager : MonoBehaviour
     {
         EventManager.BalanceAmountDeductionEvent += BalanceDeduction;
         EventManager.DisableSlamStopEvent -= DisableSlamStopButton;
+        EventManager.SetButtonForSpinEvent -= SetButtonForStartingSpin;
+        EventManager.OnClickResetDataEvent -= ResetWinAndDisableSlamStop;
     }
 
     private void OnDisable()

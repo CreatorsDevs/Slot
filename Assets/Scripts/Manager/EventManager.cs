@@ -17,6 +17,8 @@ public class EventManager
     public static Action DisableSlamStopEvent;
     public static Action OnAllReelStopppedEvent;
     public static Action SpinResponseEvent;
+    public static Action SetButtonForSpinEvent;
+    public static Action OnClickResetDataEvent;
 
 
     // Game Economy Actions
@@ -63,5 +65,15 @@ public class EventManager
     public static void InvokeSpinResponse()
     {
         SpinResponseEvent();
+    }
+
+    public static void InvokeSetButtonForSpin()
+    {
+        SetButtonForSpinEvent?.Invoke();
+    }
+
+    public static void InvokeOnClickResetData()
+    {
+        OnClickResetDataEvent();
     }
 }

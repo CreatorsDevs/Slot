@@ -47,6 +47,11 @@ public class GameManager : MonoSingleton<GameManager>
         EconomyManager.OnUpdateCurrentBalance();
     }
 
+    public void ResetSlamStop()
+    {
+        IsSlamStop = false;
+    }
+
     public enum GameStatesType
     {
         NormalSpin = 0,

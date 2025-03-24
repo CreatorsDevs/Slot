@@ -9,6 +9,8 @@ namespace FSM.GameState
 
         public NormalState(GamePlayStateMachine gamestatemachine) : base(gamestatemachine) { }
         private StateName _nextStateName;
+        private bool showPaylineInLoop;
+
         public override void Enter()
         {
             GameManager.CurrentState = StateName.Normal;
@@ -24,7 +26,15 @@ namespace FSM.GameState
 
         private void OnSpinClick()
         {
+            isSlamStop = true;
 
+            EventManager.InvokeSetButtonForSpin();
+            GameManager.Instance.ResetSlamStop();
+            showPaylineInLoop = ReelManager.Instance.SystemConfig.ShowPaylinesInLoop;
+            gameStateMachine.StopAllCoroutines();
+            ReelManager.Instance.ResetReels();
+            EventManager.InvokeOnClickResetData();
+            ReelManager.Instance.SpinReels();
         }
 
         private void OnSpinDataFetched()
@@ -33,7 +43,7 @@ namespace FSM.GameState
             ReelManager.Instance.OnSpinDataFetched();
         }
 
-        private void CheckPaylines() => _gameStateMachine.StartCoroutine(CheckPaylinesRoutine());
+        private void CheckPaylines() => gameStateMachine.StartCoroutine(CheckPaylinesRoutine());
 
         private IEnumerator CheckPaylinesRoutine()
         {

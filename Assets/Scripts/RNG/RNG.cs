@@ -23,12 +23,14 @@ public class RNG : MonoSingleton<RNG>
 
     public void SendSpinRequest()
     {
+        SendNormalSpinRequest();
         CreateNewDataSet();
     }
 
     private void CreateNewDataSet()
     {
-        // TODO
+        // TODO: Update new data and create it
+        EventManager.InvokeSpinResponse();
     }
 
     private void SendNormalSpinRequest()

@@ -13,7 +13,7 @@ namespace FSM.GameState
             GameManager.CurrentState = StateName.Scatter;
             SubscribeEvents();
             InitializeGamestate();
-            _gameStateMachine.StartCoroutine(StartFreeSpinWithDelay(2f));
+            gameStateMachine.StartCoroutine(StartFreeSpinWithDelay(2f));
         }
         private void SubscribeEvents()
         {

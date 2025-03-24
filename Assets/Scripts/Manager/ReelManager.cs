@@ -164,12 +164,6 @@ public class ReelManager : MonoSingleton<ReelManager>
     private IEnumerator StopReels()
     {
         reelStopCount = 0;
-        if (GameManager.IsSlamStop)
-        {
-            StopAllCoroutines();
-            StopReelsImmediately();
-            yield break;
-        }
         foreach (Reel reel in Reels)
         {
             if (reel.anticipateReelForSpecialSymbol)
