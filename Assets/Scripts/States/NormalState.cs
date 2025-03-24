@@ -58,7 +58,7 @@ namespace FSM.GameState
 
         private void UnSubscribeEvents()
         {
-            EventManager.SpinResponseEvent += OnSpinDataFetched;
+            EventManager.SpinResponseEvent -= OnSpinDataFetched;
             EventManager.SpinButtonClickedEvent -= OnSpinClick;
             EventManager.OnAllReelStopppedEvent -= CheckPaylines;
         }

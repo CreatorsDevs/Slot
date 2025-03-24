@@ -35,6 +35,7 @@ public class GameManager : MonoSingleton<GameManager>
     private void StartGame()
     {
         uiManager.SetInitialBalance();
+        gamePlayStateMachine.SwitchState(gamePlayStateMachine.NormalGameState);
         StartCoroutine(loadingBar.MoveSliderRandomly());
         reelManager.SetReels();
     }
