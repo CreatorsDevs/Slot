@@ -87,7 +87,7 @@ public class PaylineController : MonoSingleton<PaylineController>
     {
         var symbolPrefabs = ReelManager.Instance.SystemConfig.SymbolPrefabs;
         Symbol payoutSymbol = symbolPrefabs[payline.PAYOUTSYMBOLID];
-        //Audiomanager.Instance.PlaySfx(payoutSymbol._audioClip);
+        AudioManager.Instance.PlaySfx(payoutSymbol._audioClip);
     }
 
     private void AnimatePaylineAndSymbols()

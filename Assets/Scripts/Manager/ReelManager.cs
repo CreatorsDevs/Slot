@@ -57,6 +57,7 @@ public class ReelManager : MonoSingleton<ReelManager>
         }
         IsReelStopped = false;
         RNG.Instance.SendSpinRequest();
+        AudioManager.Instance.PlaySfx(SFX.ReelSpin);
         CurrentSpinState = SpinState.Spinning;
         WaitForSeconds waittime = new WaitForSeconds(GetReelRotationOffset);
         foreach (Reel reel in Reels)
@@ -110,6 +111,7 @@ public class ReelManager : MonoSingleton<ReelManager>
         if (GameManager.IsSlamStop)
         {
             reel.HideAnticipationGlow();
+            AudioManager.Instance.StopSfx(SFX.anticipation);
             yield return new WaitForEndOfFrame();
         }
         #endregion
@@ -118,6 +120,7 @@ public class ReelManager : MonoSingleton<ReelManager>
         else
         {
             reel.ShowAnticipationGlow();
+            AudioManager.Instance.PlaySfx(SFX.anticipation);
             yield return DelayAnticipation(anticipationDelay);
         }
         #endregion
@@ -126,6 +129,7 @@ public class ReelManager : MonoSingleton<ReelManager>
     private IEnumerator DelayAnticipation(float delay)
     {
         yield return new WaitForSeconds(delay);
+        AudioManager.Instance.PlaySfx(SFX.ReelStop);
     }
 
     public IEnumerator StopReelsWithoutSpecialSymbol(float reelstopldelay)
@@ -134,6 +138,7 @@ public class ReelManager : MonoSingleton<ReelManager>
         if (GameManager.IsSlamStop)
         {
             yield return new WaitForEndOfFrame();
+            AudioManager.Instance.StopSfx(SFX.anticipation);
         }
         #endregion
 
@@ -141,6 +146,7 @@ public class ReelManager : MonoSingleton<ReelManager>
         else
         {
             yield return new WaitForSeconds(reelstopldelay);
+            AudioManager.Instance.PlaySfx(SFX.ReelStop);
         }
         #endregion
     }
@@ -163,6 +169,7 @@ public class ReelManager : MonoSingleton<ReelManager>
 
     private IEnumerator StopReels()
     {
+        AudioManager.Instance.StopSfx(SFX.ReelSpin);
         reelStopCount = 0;
         foreach (Reel reel in Reels)
         {
@@ -185,6 +192,7 @@ public class ReelManager : MonoSingleton<ReelManager>
             reel.SpinStop(() => OnReelStop());
             reel.StopSpinRoutine();
         }
+        AudioManager.Instance.StopSfx(SFX.ReelSpin);
     }
 
     private void OnReelStop()

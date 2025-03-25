@@ -97,6 +97,7 @@ public class UIManager : MonoBehaviour
 
         currentBetIndex++;
         UpdateCreditValue();
+        AudioManager.Instance.PlayUiSfx(SFX.GeneralButton);
     }
 
     public void OnClickDown()
@@ -105,6 +106,7 @@ public class UIManager : MonoBehaviour
         {
             currentBetIndex--;
             UpdateCreditValue();
+            AudioManager.Instance.PlayUiSfx(SFX.GeneralButton);
         }
     }
 
@@ -125,6 +127,7 @@ public class UIManager : MonoBehaviour
             ResetWinAndDisableSlamStop();
             EventManager.InvokeOnSpinClicked();
             SetButton(false);
+            AudioManager.Instance.PlayUiSfx(SFX.GeneralButton);
         }
         else
         {

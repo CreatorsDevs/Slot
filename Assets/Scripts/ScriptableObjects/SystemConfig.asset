@@ -30,5 +30,5 @@ MonoBehaviour:
   ShowPaylinesInLoop: 1
   ScatterId: 10
   AnticipateScatter: 1
-  AnticipationDuration: 3
+  AnticipationDuration: 5
   BonusId: 11

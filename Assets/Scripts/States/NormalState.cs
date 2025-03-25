@@ -41,6 +41,7 @@ namespace FSM.GameState
             gameStateMachine.StopAllCoroutines();
             ReelManager.Instance.ResetReels();
             PaylineController.Instance.ResetPayLine();
+            AudioManager.Instance._sfxAudioSource.Stop();
             EventManager.InvokeOnClickResetData();
             ReelManager.Instance.SpinReels();
         }
