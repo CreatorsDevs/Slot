@@ -144,11 +144,20 @@ public class RNG : MonoSingleton<RNG>
 
     private void DataSet3()
     {
-        playData.matrix.Add(new List<int> { 3, 0, 5 });
+        payline.paylineId = 19;
+        payline.symbol = 8;
+        payline.positions = new[] { 2, 2, 0, 2, 2 };
+        payline.symbolCount = 5;
+        payline.won = 1000;
+
+        playData.matrix.Add(new List<int> { 1, 0, 8 });
         playData.matrix.Add(new List<int> { 9, 3, 8 });
-        playData.matrix.Add(new List<int> { 7, 1, 9 });
-        playData.matrix.Add(new List<int> { 2, 2, 10 });
-        playData.matrix.Add(new List<int> { 1, 1, 6 });
+        playData.matrix.Add(new List<int> { 8, 1, 9 });
+        playData.matrix.Add(new List<int> { 2, 2, 8 });
+        playData.matrix.Add(new List<int> { 1, 1, 8 });
+
+        scatter.count = 0;
+        bonus.count = 0;
     }
     private void DataSet4()
     {
