@@ -23,6 +23,9 @@ public class EventManager
     public static Action OnNormalSpinCompleteEvent;
     public static Action OnScatterPaylineStopped;
     public static Action OnBonusPaylineStopped;
+    public static Action ScatterStateStartedEvent;
+    public static Action NormalStateStartedEvent;
+    public static Action<int> OnFreeSpinPlayed;
 
     // Game Economy Actions
     public static Action<int> UpdateCreditValueIndexEvent;
@@ -106,4 +109,13 @@ public class EventManager
     {
         OnBonusPaylineStopped();
     }
+
+    public static void InvokeFreeSpinPlayed(int currentFreeSpinCount)
+    {
+        OnFreeSpinPlayed(currentFreeSpinCount);
+    }
+
+    public static void InvokeScatterStateStartedEvent() => ScatterStateStartedEvent?.Invoke();
+    public static void InvokeNormalStateStartedEvent() => NormalStateStartedEvent?.Invoke();
+
 }

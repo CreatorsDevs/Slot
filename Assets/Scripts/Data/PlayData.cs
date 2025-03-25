@@ -16,12 +16,12 @@ namespace Data
     public class Scatter
     {
         public int count;
-        public int[] positions;
+        public string[] positions;
     }
     public class Bonus
     {
         public int count;
-        public int[] positions;
+        public string[] positions;
     }
     public class FreeGame
     {

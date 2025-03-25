@@ -128,13 +128,13 @@ namespace FSM.GameState
                 hasShownPaylineOnce = true;
 
                 PaylineController.Instance.ShowTotalWinAmountVisuals(currentSpinTotalWon);
-                yield return gameStateMachine.StartCoroutine(PaylineController.Instance.ShowNormalPayline(normalpayline, scatterpayline));
+                yield return gameStateMachine.StartCoroutine(PaylineController.Instance.ShowNormalPayline());
             }
             if (scatterpayline)
             {
                 nextStateName = StateName.Scatter;
                 showPaylineInLoop = false;
-                yield return gameStateMachine.StartCoroutine(PaylineController.Instance.ShowScatterPayline(normalpayline, scatterpayline));
+                yield return gameStateMachine.StartCoroutine(PaylineController.Instance.ShowScatterPayline());
             }
 
             SpinCompleted();
@@ -142,7 +142,7 @@ namespace FSM.GameState
             while (showPaylineInLoop)
             {
                 PaylineController.Instance.SetPayLineState(PayLineState.Looping);
-                yield return gameStateMachine.StartCoroutine(PaylineController.Instance.ShowNormalPayline(normalpayline, scatterpayline));
+                yield return gameStateMachine.StartCoroutine(PaylineController.Instance.ShowNormalPayline());
             }
             PaylineController.Instance.SetPayLineState(PayLineState.NotShowing);
             PaylineController.Instance.ReelTint.SetActive(false);

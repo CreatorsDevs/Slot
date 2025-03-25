@@ -62,22 +62,30 @@ public class PaylineController : MonoSingleton<PaylineController>
 
     public void ShowTotalWinPopup(double winamount) => paylineWinning.ShowTotalWin(winamount);
 
-    public IEnumerator ShowNormalPayline(bool normalpayline, bool scatterpayline)
+    public IEnumerator ShowNormalPayline()
     {
-        AnimatePaylineAndSymbols(normalpayline, scatterpayline);
+        AnimatePaylineAndSymbols();
         yield return WaitTimeForPayLine(CurrentPayLineState);
         StopWinAnimation();
         HidePayline(normalPayline.ID);
     }
 
-    public IEnumerator ShowScatterPayline(bool normalpayline, bool scatterpayline)
+    public IEnumerator ShowScatterPayline()
     {
         EventManager.InvokeSetButtonForSpin();
-        AnimatePaylineAndSymbols(normalpayline, scatterpayline);
-        SpecialPayline payline = scatterPayline;
-        PlaySymbolSound(payline);
-        yield return new WaitForSeconds(ReelManager.Instance.SystemConfig.ShowPaylineDuration);
-        ReelTint.SetActive(false);
+        float waittime = ReelManager.Instance.SystemConfig.ShowPaylineDuration;
+        Symbol scattersymbol = null;
+
+        for (int i = 0; i < scatterPayline.POSITIONS.GetLength(0); i++)
+        {
+            int reelindex = scatterPayline.POSITIONS[i, 0];
+            int scattersymbolindex = scatterPayline.POSITIONS[i, 1];
+            scattersymbol = ReelManager.Instance.Reels[reelindex].OutcomeSymbols[scattersymbolindex];
+            scattersymbol.ShowWin(CurrentPayLineState);
+        }
+        AudioManager.Instance.PlaySfx(scattersymbol._audioClip);
+
+        yield return new WaitForSeconds(waittime);
         StopWinAnimation();
     }
 
@@ -110,28 +118,16 @@ public class PaylineController : MonoSingleton<PaylineController>
         AudioManager.Instance.PlaySfx(payoutSymbol._audioClip);
     }
 
-    private void AnimatePaylineAndSymbols(bool normalpayline, bool scatterpayline)
+    private void AnimatePaylineAndSymbols()
     {
-        if (normalpayline)
-        {
-            var payline = normalPayline;
+        var payline = normalPayline;
 
-            for (int i = 0; i < payline.SYMBOLSCOUNT; i++)
-            {
-                Reel reel = ReelManager.Instance.Reels[i];
-                reel.OutcomeSymbols[payline.SYMBOLPOSITIONS[i]].ShowWin(CurrentPayLineState);
-            }
-            ShowPayline(payline.ID);
-        }
-        else if (scatterpayline) 
+        for (int i = 0; i < payline.SYMBOLSCOUNT; i++)
         {
-            var payline = scatterPayline;
-            for (int i = 0; i < payline.SPECIALSYMBOLPOSITIONS.Length; i++)
-            {
-                Reel reel = ReelManager.Instance.Reels[i];
-                reel.OutcomeSymbols[payline.SPECIALSYMBOLPOSITIONS[i]].ShowWin(CurrentPayLineState);
-            }
+            Reel reel = ReelManager.Instance.Reels[i];
+            reel.OutcomeSymbols[payline.SYMBOLPOSITIONS[i]].ShowWin(CurrentPayLineState);
         }
+        ShowPayline(payline.ID);
     }
 
     public void ShowPayline(int paylineid)

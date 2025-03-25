@@ -11,6 +11,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI landscapeAvailableBalance;
     [SerializeField] private TextMeshProUGUI landscapeWinAmount;
     [SerializeField] private TextMeshProUGUI landscapeCurrentBet;
+    [SerializeField] private TextMeshProUGUI landscapeCurrentFreeSpinCounter;
+    [SerializeField] private GameObject landscapeFreeGame;
     [SerializeField] private Button landscapeUpBtn;
     [SerializeField] private Button landscapeDownBtn;
     [SerializeField] private Button landscapeInfoBtn;
@@ -23,6 +25,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI portraitAvailableBalance;
     [SerializeField] private TextMeshProUGUI portraitWinAmount;
     [SerializeField] private TextMeshProUGUI portraitCurrentBet;
+    [SerializeField] private TextMeshProUGUI portraitCurrentFreeSpinCounter;
+    [SerializeField] private GameObject portraitFreeGame;
     [SerializeField] private Button portraitUpBtn;
     [SerializeField] private Button portraitDownBtn;
     [SerializeField] private Button portraitInfoBtn;
@@ -57,8 +61,24 @@ public class UIManager : MonoBehaviour
         EventManager.WinAmountEvent += WinAmount;
         EventManager.OnUpdateCurrentBalanceEvent += UpdateBalanceAmount;
         EventManager.OnNormalSpinCompleteEvent += OnNormalSpinComplete;
+        EventManager.ScatterStateStartedEvent += SetButtonForScatterState;
+        EventManager.OnFreeSpinPlayed += CurrentSpin;
+        EventManager.ScatterStateStartedEvent += EnableFreeGameTextUI;
+        EventManager.NormalStateStartedEvent += DisableFreeGameTextUI;
+        EventManager.NormalStateStartedEvent += SetButtonForReturningToNormalState;
     }
 
+    public void EnableFreeGameTextUI()
+    {
+        landscapeFreeGame.SetActive(true);
+        portraitFreeGame.SetActive(true);
+    }
+
+    public void DisableFreeGameTextUI()
+    {
+        landscapeFreeGame.SetActive(false);
+        portraitFreeGame.SetActive(false);
+    }
     public void UpdateCreditValue()
     {
         landscapeCurrentBet.text = (GameConstants.creditValue[currentBetIndex] * BetManager.Instance.Bet).ToString("F2");
@@ -206,6 +226,22 @@ public class UIManager : MonoBehaviour
         portraitSlamStopButton.interactable = false;
     }
 
+    private void SetButtonForScatterState()
+    {
+        SetButton(false);
+    }
+
+    private void SetButtonForReturningToNormalState()
+    {
+        SetButton(true);
+        SetBetButtonInteractivity();
+    }
+    private void CurrentSpin(int currentSpin)
+    {
+        landscapeCurrentFreeSpinCounter.text = currentSpin.ToString();
+        portraitCurrentFreeSpinCounter.text = currentSpin.ToString();
+    }
+
     private void UnSubscribeEvents()
     {
         EventManager.BalanceAmountDeductionEvent -= BalanceDeduction;
@@ -214,7 +250,13 @@ public class UIManager : MonoBehaviour
         EventManager.OnClickResetDataEvent -= ResetWinAndDisableSlamStop;
         EventManager.WinAmountEvent -= WinAmount;
         EventManager.OnUpdateCurrentBalanceEvent -= UpdateBalanceAmount;
-        EventManager.OnNormalSpinCompleteEvent += OnNormalSpinComplete;
+        EventManager.OnNormalSpinCompleteEvent -= OnNormalSpinComplete;
+        EventManager.ScatterStateStartedEvent -= SetButtonForScatterState;
+        EventManager.OnFreeSpinPlayed -= CurrentSpin;
+        EventManager.ScatterStateStartedEvent -= EnableFreeGameTextUI;
+        EventManager.NormalStateStartedEvent -= DisableFreeGameTextUI;
+        EventManager.NormalStateStartedEvent -= SetButtonForReturningToNormalState;
+
     }
 
     private void OnDisable()

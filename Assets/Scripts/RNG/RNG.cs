@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Data;
+using FSM.GameState;
 
 public class RNG : MonoSingleton<RNG>
 {
@@ -16,6 +17,7 @@ public class RNG : MonoSingleton<RNG>
     public PlayData playData = new PlayData();
     public Scatter scatter = new Scatter();
     public Bonus bonus = new Bonus();
+    public FreeGame freeGame = new FreeGame();
     List<List<int>> matrix = new();
     List<System.Action> dataSets = new List<System.Action>();
 
@@ -71,6 +73,12 @@ public class RNG : MonoSingleton<RNG>
         GenerateNewData();
     }
 
+    public void SpinTheFreeReel(int remainingfreereel)
+    {
+        ClearData();
+        RunFreeStates(remainingfreereel);
+    }
+
     private void GenerateNewData()
     {
         ClearData();
@@ -81,7 +89,8 @@ public class RNG : MonoSingleton<RNG>
             DataSet2,
             DataSet3,
             DataSet4,
-            DataSet5
+            DataSet5,
+            DataSet6
             // Add more data sets here...
         };
 
@@ -100,9 +109,12 @@ public class RNG : MonoSingleton<RNG>
         payline.won = 0;
 
         playData.matrix.Clear();
-
+        
+        scatter.positions = null;
         scatter.count = 0;
         bonus.count = 0;
+        freeGame.totalFreeSpin = 0;
+        freeGame.currentFreeSpin = 0;
     }
 
     private void DataSet1()
@@ -175,6 +187,75 @@ public class RNG : MonoSingleton<RNG>
         playData.matrix.Add(new List<int> { 7, 8, 9 });
         playData.matrix.Add(new List<int> { 0, 2, 10 });
         playData.matrix.Add(new List<int> { 9, 1, 0 });
+    }
+
+    private void DataSet6()
+    {
+        playData.matrix.Add(new List<int> { 11, 2, 8 });
+        playData.matrix.Add(new List<int> { 9, 3, 1 });
+        playData.matrix.Add(new List<int> { 11, 8, 9 });
+        playData.matrix.Add(new List<int> { 0, 2, 11 });
+        playData.matrix.Add(new List<int> { 9, 1, 0 });
+
+        scatter.count = 3;
+        scatter.positions = new[] { "0,0", "2,0", "3,2" };
+
+        freeGame.totalFreeSpin = 3;
+        freeGame.currentFreeSpin = 3;
+    }
+
+    private void FreeDataSet1()
+    {
+        playData.matrix.Add(new List<int> { 10, 2, 8 });
+        playData.matrix.Add(new List<int> { 9, 3, 1 });
+        playData.matrix.Add(new List<int> { 7, 8, 9 });
+        playData.matrix.Add(new List<int> { 0, 2, 10 });
+        playData.matrix.Add(new List<int> { 9, 1, 0 });
+
+        freeGame.totalFreeSpin = 3;
+        freeGame.currentFreeSpin = 1;
+    }
+
+    private void FreeDataSet2()
+    {
+        playData.matrix.Add(new List<int> { 1, 2, 8 });
+        playData.matrix.Add(new List<int> { 9, 3, 10 });
+        playData.matrix.Add(new List<int> { 7, 0, 9 });
+        playData.matrix.Add(new List<int> { 0, 2, 2 });
+        playData.matrix.Add(new List<int> { 9, 1, 2 });
+
+        freeGame.totalFreeSpin = 3;
+        freeGame.currentFreeSpin = 2;
+    }
+
+    private void FreeDataSet3()
+    {
+        payline.paylineId = 19;
+        payline.symbol = 6;
+        payline.positions = new[] { 2, 2, 0, 2, 2 };
+        payline.symbolCount = 4;
+        payline.won = 900;
+
+        playData.matrix.Add(new List<int> { 1, 0, 6 });
+        playData.matrix.Add(new List<int> { 9, 3, 6 });
+        playData.matrix.Add(new List<int> { 6, 1, 9 });
+        playData.matrix.Add(new List<int> { 2, 2, 6 });
+        playData.matrix.Add(new List<int> { 1, 1, 2 });
+
+        freeGame.totalFreeSpin = 3;
+        freeGame.currentFreeSpin = 3;
+    }
+
+    public int RemainingFreeSpins()
+    {
+        return 3; // Test Data
+    }
+
+    private void RunFreeStates(int remainingfreereel)
+    {
+        if (remainingfreereel == 3) FreeDataSet1();
+        else if(remainingfreereel == 2) FreeDataSet2();
+        else if(remainingfreereel == 1) FreeDataSet3();
     }
 
     public void SpinCompleted()

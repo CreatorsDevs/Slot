@@ -28,7 +28,7 @@ MonoBehaviour:
   ShowPaylineDuration: 2
   ShowFlashPaylineDuration: 0.5
   ShowPaylinesInLoop: 1
-  ScatterId: 10
+  ScatterId: 11
   AnticipateScatter: 1
   AnticipationDuration: 5
-  BonusId: 11
+  BonusId: 10
