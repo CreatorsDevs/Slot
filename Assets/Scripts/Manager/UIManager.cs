@@ -65,6 +65,7 @@ public class UIManager : MonoBehaviour
         EventManager.OnFreeSpinPlayed += CurrentSpin;
         EventManager.ScatterStateStartedEvent += EnableFreeGameTextUI;
         EventManager.NormalStateStartedEvent += DisableFreeGameTextUI;
+        EventManager.NormalStateStartedEvent += SetButtonForReturningToNormalState;
     }
 
     public void EnableFreeGameTextUI()
@@ -208,7 +209,7 @@ public class UIManager : MonoBehaviour
 
     private void UpdateBalanceAmount()
     {
-        double updatedBalance = RNG.Instance.CurrentBalance;
+        double updatedBalance = RNG.Instance.CurrentBalance + RNG.Instance.payline.won;
         landscapeAvailableBalance.text = updatedBalance.ToString("F2");
         portraitAvailableBalance.text = updatedBalance.ToString("F2");
     }
@@ -255,8 +256,6 @@ public class UIManager : MonoBehaviour
         EventManager.ScatterStateStartedEvent -= EnableFreeGameTextUI;
         EventManager.NormalStateStartedEvent -= DisableFreeGameTextUI;
         EventManager.NormalStateStartedEvent -= SetButtonForReturningToNormalState;
-        EventManager.ScatterStateStartedEvent -= SetButtonForReturningToNormalState;
-
     }
 
     private void OnDisable()
