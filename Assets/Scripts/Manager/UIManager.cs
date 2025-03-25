@@ -91,8 +91,8 @@ public class UIManager : MonoBehaviour
         }
         else
         {
-            landscapeDownBtn.interactable = false;
-            portraitDownBtn.interactable = false;
+            landscapeDownBtn.interactable = true;
+            portraitDownBtn.interactable = true;
         }
     }
 
