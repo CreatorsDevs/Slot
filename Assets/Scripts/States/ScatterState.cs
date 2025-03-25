@@ -19,9 +19,10 @@ namespace FSM.GameState
             AudioManager.Instance.PlayMusic(Music.FreeBgm);
             GameManager.CurrentState = StateName.Scatter;
             EventManager.InvokeScatterStateStartedEvent();
+
             SubscribeEvents();
             InitializeGamestate();
-            gameStateMachine.StartCoroutine(StartFreeSpinWithDelay(2f));
+            gameStateMachine.StartCoroutine(StartFreeSpinWithDelay(3f));
         }
         private void SubscribeEvents()
         {
@@ -38,6 +39,10 @@ namespace FSM.GameState
 
         private IEnumerator StartFreeSpinWithDelay(float delay)
         {
+            EventManager.InvokeFreeSpinIntroPopUp();
+            AudioManager.Instance.PlaySfx(SFX.FreeIntro);
+            yield return new WaitForSeconds(2f);
+            EventManager.CloseFreeSpinIntroPopUp();
             yield return new WaitForSeconds(delay);
             StartFreeSpin();
         }
@@ -137,8 +142,18 @@ namespace FSM.GameState
 
         private void ScatterGameEnd()
         {
+            gameStateMachine.StartCoroutine(EndFreeSpinWIthDelay(3f));
             gameStateMachine.SwitchState(gameStateMachine.NormalGameState);
             GameManager.Instance.CurrentGameState = GameManager.GameStatesType.NormalSpin;
+        }
+
+        private IEnumerator EndFreeSpinWIthDelay(float delay)
+        {
+            EventManager.InvokeFreeSpinOutroPopUp();
+            AudioManager.Instance.PlaySfx(SFX.FreeOutro);
+            yield return new WaitForSeconds(2f);
+            EventManager.CloseFreeSpinOutroPopUp();
+            yield return new WaitForSeconds(delay);
         }
         public override void Exit()
         {

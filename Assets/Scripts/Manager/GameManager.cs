@@ -10,6 +10,8 @@ public class GameManager : MonoSingleton<GameManager>
     [SerializeField] private UIManager uiManager;
     [SerializeField] private GameObject BaseBG;
     [SerializeField] private GameObject FreeBG;
+    [SerializeField] private GameObject FreeIntro;
+    [SerializeField] private GameObject FreeOutro;
 
     [Header("Public Fields!")]
     public GamePlayStateMachine gamePlayStateMachine;
@@ -30,6 +32,10 @@ public class GameManager : MonoSingleton<GameManager>
         EventManager.OnBonusPaylineStopped += OnBonusPaylineStopped;
         EventManager.ScatterStateStartedEvent += EnableFreeGameBG;
         EventManager.NormalStateStartedEvent += DisableFreeGameBG;
+        EventManager.ShowFreeSpinIntro += ShowFreeIntroPopUp;
+        EventManager.ShowFreeSpinOutro += ShowFreeOutroPopUp;
+        EventManager.CloseFreeSpinIntro += CloseFreeIntroPopUp;
+        EventManager.CloseFreeSpinOutro += CloseFreeOutroPopUp;
     }
 
     private void Start()
@@ -54,6 +60,26 @@ public class GameManager : MonoSingleton<GameManager>
         EconomyManager.OnUpdateCurrentBalance();
     }
 
+    private void ShowFreeIntroPopUp()
+    {
+        FreeIntro.SetActive(true);
+    }
+
+    private void CloseFreeIntroPopUp()
+    {
+        FreeIntro.SetActive(false);
+    }
+
+    private void ShowFreeOutroPopUp()
+    {
+        FreeOutro.SetActive(true);
+    }
+
+    private void CloseFreeOutroPopUp()
+    {
+        FreeOutro.SetActive(false);
+    }
+
     private void EnableFreeGameBG()
     {
         BaseBG.SetActive(false);
@@ -65,6 +91,7 @@ public class GameManager : MonoSingleton<GameManager>
         BaseBG.SetActive(true);
         FreeBG.SetActive(false);
     }
+    
     public void ResetSlamStop()
     {
         IsSlamStop = false;
@@ -123,6 +150,10 @@ public class GameManager : MonoSingleton<GameManager>
         EventManager.OnBonusPaylineStopped -= OnBonusPaylineStopped;
         EventManager.ScatterStateStartedEvent -= EnableFreeGameBG;
         EventManager.NormalStateStartedEvent -= DisableFreeGameBG;
+        EventManager.ShowFreeSpinIntro -= ShowFreeIntroPopUp;
+        EventManager.ShowFreeSpinOutro -= ShowFreeOutroPopUp;
+        EventManager.CloseFreeSpinIntro -= CloseFreeIntroPopUp;
+        EventManager.CloseFreeSpinOutro -= CloseFreeOutroPopUp;
     }
 }
 

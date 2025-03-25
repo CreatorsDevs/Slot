@@ -25,6 +25,10 @@ public class EventManager
     public static Action OnBonusPaylineStopped;
     public static Action ScatterStateStartedEvent;
     public static Action NormalStateStartedEvent;
+    public static Action ShowFreeSpinIntro;
+    public static Action CloseFreeSpinIntro;
+    public static Action ShowFreeSpinOutro;
+    public static Action CloseFreeSpinOutro;
     public static Action<int> OnFreeSpinPlayed;
 
     // Game Economy Actions
@@ -118,4 +122,8 @@ public class EventManager
     public static void InvokeScatterStateStartedEvent() => ScatterStateStartedEvent?.Invoke();
     public static void InvokeNormalStateStartedEvent() => NormalStateStartedEvent?.Invoke();
 
+    public static void InvokeFreeSpinIntroPopUp() => ShowFreeSpinIntro?.Invoke();
+    public static void CloseFreeSpinIntroPopUp() => CloseFreeSpinIntro?.Invoke();
+    public static void InvokeFreeSpinOutroPopUp() => ShowFreeSpinOutro?.Invoke();
+    public static void CloseFreeSpinOutroPopUp() => CloseFreeSpinOutro?.Invoke();
 }
