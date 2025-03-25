@@ -68,14 +68,13 @@ public class RNG : MonoSingleton<RNG>
     }
     public void SpinTheReel()
     {
-        dataSets.Clear();
         GenerateNewData();
     }
 
     private void GenerateNewData()
     {
-        playData.balance = 10000;
-
+        ClearData();
+        UnityEngine.Random.InitState((int)System.DateTime.Now.Ticks);
         dataSets = new List<System.Action>()
         {
             DataSet1,
@@ -90,6 +89,20 @@ public class RNG : MonoSingleton<RNG>
         int randomIndex = UnityEngine.Random.Range(0, dataSets.Count);
         dataSets[randomIndex].Invoke();
 
+    }
+
+    private void ClearData()
+    {
+        payline.paylineId = 0;
+        payline.symbol = 0;
+        payline.positions = null;
+        payline.symbolCount = 0;
+        payline.won = 0;
+
+        playData.matrix.Clear();
+
+        scatter.count = 0;
+        bonus.count = 0;
     }
 
     private void DataSet1()
