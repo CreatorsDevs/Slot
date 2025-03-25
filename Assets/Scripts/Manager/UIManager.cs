@@ -59,12 +59,6 @@ public class UIManager : MonoBehaviour
         EventManager.OnNormalSpinCompleteEvent += OnNormalSpinComplete;
     }
 
-    public void SetUIOnStart()
-    {
-        UpdateCreditValue();
-        SetInitialBalance();
-    }
-
     public void UpdateCreditValue()
     {
         landscapeCurrentBet.text = (GameConstants.creditValue[currentBetIndex] * BetManager.Instance.Bet).ToString("F2");
@@ -185,7 +179,7 @@ public class UIManager : MonoBehaviour
         currentAvailableBalance = decimal.Parse(landscapeAvailableBalance.text);
         currentBet = decimal.Parse(landscapeCurrentBet.text);
         decimal balance = currentAvailableBalance - currentBet;
-
+        RNG.Instance.CurrentBalance = (double)balance;
         landscapeAvailableBalance.text = balance.ToString("F2");
         portraitAvailableBalance.text = balance.ToString("F2");
     }

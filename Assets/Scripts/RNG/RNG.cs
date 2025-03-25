@@ -8,7 +8,7 @@ using Data;
 public class RNG : MonoSingleton<RNG>
 {
     private double currentBalance;
-    public double CurrentBalance { get => currentBalance; }
+    public double CurrentBalance { get => currentBalance; set => currentBalance = value; }
 
     public Action CompleteResponseFetchedEvent;
 
