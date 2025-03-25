@@ -8,7 +8,7 @@ using UnityEngine;
 public class PaylineController : MonoSingleton<PaylineController>
 {
     [SerializeField] private PaylineWinning paylineWinning;
-    public GameObject WinTint;
+    public GameObject ReelTint;
     public Payline Payline;
     public SpecialPayline scatterPayline;
     public SpecialPayline bonusPayline;
@@ -36,7 +36,7 @@ public class PaylineController : MonoSingleton<PaylineController>
     {
         StopWinAnimation();
         SetPayLineState(PayLineState.NotShowing);
-        WinTint.SetActive(false);
+        ReelTint.SetActive(false);
         paylineWinning.Reset();
         StopAllCoroutines();
     }
@@ -50,7 +50,7 @@ public class PaylineController : MonoSingleton<PaylineController>
         }
     }
 
-    private void UpdateBalance() => EventManager.InvokeWinAmount(RNG.Instance.GetTotalCreditWon());
+    private void UpdateBalance() => EventManager.InvokeWinAmount(RNG.Instance.payline.won);
 
     public void ShowTotalWinPopup(double winamount) => paylineWinning.ShowTotalWin(winamount);
 

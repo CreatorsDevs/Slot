@@ -25,6 +25,8 @@ public class GameManager : MonoSingleton<GameManager>
     {
         StartGame();
         EventManager.OnSpinClickedEvent += OnSpinClicked;
+        EventManager.OnScatterPaylineStopped += OnScatterPaylineStopped;
+        EventManager.OnBonusPaylineStopped += OnBonusPaylineStopped;
     }
 
     private void Start()
@@ -89,9 +91,21 @@ public class GameManager : MonoSingleton<GameManager>
         }
     }
 
+    public void OnScatterPaylineStopped()
+    {
+        gamePlayStateMachine.SwitchState(gamePlayStateMachine.ScatterGameState);
+    }
+
+    public void OnBonusPaylineStopped()
+    {
+        gamePlayStateMachine.SwitchState(gamePlayStateMachine.BonusGameState);
+    }
+
     private void OnDisable()
     {
         EventManager.OnSpinClickedEvent -= OnSpinClicked;
+        EventManager.OnScatterPaylineStopped -= OnScatterPaylineStopped;
+        EventManager.OnBonusPaylineStopped -= OnBonusPaylineStopped;
     }
 }
 

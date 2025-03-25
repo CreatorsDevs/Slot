@@ -8,7 +8,7 @@ namespace FSM.GameState
         private bool isSlamStop;
 
         public NormalState(GamePlayStateMachine gamestatemachine) : base(gamestatemachine) { }
-        private StateName _nextStateName;
+        private StateName nextStateName;
         private bool showPaylineInLoop;
         private double currentSpinTotalWon;
         private const int minScatterForFreeGame = 2;
@@ -18,7 +18,7 @@ namespace FSM.GameState
         public override void Enter()
         {
             GameManager.CurrentState = StateName.Normal;
-            _nextStateName = StateName.Normal;
+            nextStateName = StateName.Normal;
             PaylineController.Instance.SetPayLineState(PayLineState.NotShowing);
             SubscribeEvents();
         }
@@ -27,6 +27,7 @@ namespace FSM.GameState
             EventManager.SpinResponseEvent += OnSpinDataFetched;
             EventManager.SpinButtonClickedEvent += OnSpinClick;
             EventManager.OnAllReelStopppedEvent += CheckPaylines;
+            RNG.Instance.CompleteResponseFetchedEvent += OnCompleteResponseFetched;
         }
 
         private void OnSpinClick()
@@ -55,28 +56,55 @@ namespace FSM.GameState
         {
             yield return null;
             bool normalpayline = HasNormalPayLine();
-            gameStateMachine.StartCoroutine(ShowWinCoroutine(normalpayline));
+            if (normalpayline)
+            {
+                gameStateMachine.StartCoroutine(ShowWinCoroutine(normalpayline));
+            }
+            else
+            {
+                SpinCompleted();
+            }
         }
+        private void SpinCompleted() => RNG.Instance.SpinCompleted();
 
         private bool HasNormalPayLine()
         {
-            int paylineNumber = RNG.Instance.GetPaylineNumber();
-            int paylineCount = RNG.Instance.GetPaylineCount();
-
-            if (paylineCount > 0)
+            if (RNG.Instance.payline.won > 0)
             {
-                SetTotalAmount(RNG.Instance.GetCurrentSpinTotalWon());
+                SetTotalAmount(RNG.Instance.payline.won);
                 return true;
             }
             else
                 return false;
         }
 
+        private void OnCompleteResponseFetched()
+        {
+            if (nextStateName == StateName.Normal)
+                EventManager.InvokeOnNormalSpinComplete();
+
+            SwitchToNextState();
+        }
+
+        private void SwitchToNextState()
+        {
+            switch (nextStateName)
+            {
+                case StateName.Scatter:
+                    EventManager.InvokeScatterPaylineStopped();
+                    break;
+                case StateName.Bonus:
+                    EventManager.InvokeBonusPaylineStopped();
+                    break;
+            }
+            nextStateName = StateName.Normal;
+        }
+
         private IEnumerator ShowWinCoroutine(bool normalpayline)
         {
             bool hasShownPaylineOnce = false;
 
-            PaylineController.Instance.WinTint.SetActive(true);
+            PaylineController.Instance.ReelTint.SetActive(true);
             if (PaylineController.Instance.CurrentPayLineState == PayLineState.NotShowing)
             {
                 PaylineController.Instance.SetPayLineState(PayLineState.FirstIteration);
@@ -89,14 +117,15 @@ namespace FSM.GameState
                 yield return gameStateMachine.StartCoroutine(PaylineController.Instance.ShowNormalPayline());
             }
 
+            SpinCompleted();
+
             while (showPaylineInLoop)
             {
-                    PaylineController.Instance.SetPayLineState(PayLineState.Looping);
-                    yield return gameStateMachine.
-                    StartCoroutine(PaylineController.Instance.ShowNormalPayline());
+                PaylineController.Instance.SetPayLineState(PayLineState.Looping);
+                yield return gameStateMachine.StartCoroutine(PaylineController.Instance.ShowNormalPayline());
             }
             PaylineController.Instance.SetPayLineState(PayLineState.NotShowing);
-            PaylineController.Instance.WinTint.SetActive(false);
+            PaylineController.Instance.ReelTint.SetActive(false);
         }
 
 
@@ -114,6 +143,7 @@ namespace FSM.GameState
             EventManager.SpinResponseEvent -= OnSpinDataFetched;
             EventManager.SpinButtonClickedEvent -= OnSpinClick;
             EventManager.OnAllReelStopppedEvent -= CheckPaylines;
+            RNG.Instance.CompleteResponseFetchedEvent -= OnCompleteResponseFetched;
         }
     }
 }

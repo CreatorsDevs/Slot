@@ -36,6 +36,6 @@ namespace Data
         public Scatter scatter;
         public FreeGame freeGame;
         public Bonus bonus;
-        public double totalCreditsWon;
+        public double FreeSpinTotalCreditsWon;
     }
 }

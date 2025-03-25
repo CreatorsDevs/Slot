@@ -56,6 +56,7 @@ public class UIManager : MonoBehaviour
         EventManager.OnClickResetDataEvent += ResetWinAndDisableSlamStop;
         EventManager.WinAmountEvent += WinAmount;
         EventManager.OnUpdateCurrentBalanceEvent += UpdateBalanceAmount;
+        EventManager.OnNormalSpinCompleteEvent += OnNormalSpinComplete;
     }
 
     public void SetUIOnStart()
@@ -198,12 +199,6 @@ public class UIManager : MonoBehaviour
 
     private void OnNormalSpinComplete()
     {
-        StartCoroutine(OnNormalSpinCompleteRoutine());
-    }
-
-    private IEnumerator OnNormalSpinCompleteRoutine()
-    {
-        yield return null;
         SetButton(true);
         SetBetButtonInteractivity();
     }
@@ -222,7 +217,7 @@ public class UIManager : MonoBehaviour
         EventManager.OnClickResetDataEvent -= ResetWinAndDisableSlamStop;
         EventManager.WinAmountEvent -= WinAmount;
         EventManager.OnUpdateCurrentBalanceEvent -= UpdateBalanceAmount;
-
+        EventManager.OnNormalSpinCompleteEvent += OnNormalSpinComplete;
     }
 
     private void OnDisable()

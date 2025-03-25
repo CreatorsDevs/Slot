@@ -20,6 +20,9 @@ public class EventManager
     public static Action SetButtonForSpinEvent;
     public static Action OnClickResetDataEvent;
     public static Action OnUpdateCurrentBalanceEvent;
+    public static Action OnNormalSpinCompleteEvent;
+    public static Action OnScatterPaylineStopped;
+    public static Action OnBonusPaylineStopped;
 
     // Game Economy Actions
     public static Action<int> UpdateCreditValueIndexEvent;
@@ -87,5 +90,20 @@ public class EventManager
     public static void InvokeUpdateBalance()
     {
         OnUpdateCurrentBalanceEvent();
+    }
+
+    public static void InvokeOnNormalSpinComplete()
+    {
+        OnNormalSpinCompleteEvent();
+    }
+
+    public static void InvokeScatterPaylineStopped()
+    {
+        OnScatterPaylineStopped();
+    }
+
+    public static void InvokeBonusPaylineStopped()
+    {
+        OnBonusPaylineStopped();
     }
 }

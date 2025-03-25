@@ -10,11 +10,14 @@ public class RNG : MonoSingleton<RNG>
     private double currentBalance;
     public double CurrentBalance { get => currentBalance; }
 
+    public Action CompleteResponseFetchedEvent;
+
     public Payline payline = new Payline();
     public PlayData playData = new PlayData();
     public Scatter scatter = new Scatter();
     public Bonus bonus = new Bonus();
     List<List<int>> matrix = new();
+    List<System.Action> dataSets = new List<System.Action>();
 
     public int GetPaylineNumber()
     {
@@ -65,6 +68,7 @@ public class RNG : MonoSingleton<RNG>
     }
     public void SpinTheReel()
     {
+        dataSets.Clear();
         GenerateNewData();
     }
 
@@ -72,10 +76,13 @@ public class RNG : MonoSingleton<RNG>
     {
         playData.balance = 10000;
 
-        List<System.Action> dataSets = new List<System.Action>()
+        dataSets = new List<System.Action>()
         {
             DataSet1,
-            DataSet2
+            DataSet2,
+            DataSet3,
+            DataSet4,
+            DataSet5
             // Add more data sets here...
         };
 
@@ -120,5 +127,37 @@ public class RNG : MonoSingleton<RNG>
 
         scatter.count = 0;
         bonus.count = 0;
+    }
+
+    private void DataSet3()
+    {
+        playData.matrix.Add(new List<int> { 3, 0, 5 });
+        playData.matrix.Add(new List<int> { 9, 3, 8 });
+        playData.matrix.Add(new List<int> { 7, 1, 9 });
+        playData.matrix.Add(new List<int> { 2, 2, 10 });
+        playData.matrix.Add(new List<int> { 1, 1, 6 });
+    }
+    private void DataSet4()
+    {
+        playData.matrix.Add(new List<int> { 1, 0, 5 });
+        playData.matrix.Add(new List<int> { 9, 3, 11 });
+        playData.matrix.Add(new List<int> { 7, 0, 9 });
+        playData.matrix.Add(new List<int> { 0, 2, 10 });
+        playData.matrix.Add(new List<int> { 1, 1, 11 });
+    }
+
+    private void DataSet5()
+    {
+        playData.matrix.Add(new List<int> { 10, 2, 8 });
+        playData.matrix.Add(new List<int> { 9, 3, 1 });
+        playData.matrix.Add(new List<int> { 7, 8, 9 });
+        playData.matrix.Add(new List<int> { 0, 2, 10 });
+        playData.matrix.Add(new List<int> { 9, 1, 0 });
+    }
+
+    public void SpinCompleted()
+    {
+        EventManager.InvokeUpdateBalance();
+        CompleteResponseFetchedEvent?.Invoke();
     }
 }
