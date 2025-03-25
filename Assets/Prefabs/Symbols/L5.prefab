@@ -280,7 +280,7 @@ MonoBehaviour:
     materialsInsideMask: []
     materialsOutsideMask: []
   disableRenderingOnOverride: 1
-  _animationName: win
+  _animationName: WIN
   loop: 1
   timeScale: 1
 --- !u!33 &512600758801645860
@@ -304,7 +304,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spineGameObject: {fileID: 8938934181479255688}
-  startAnimation: win
+  startAnimation: WIN
   isLooping: 1
 --- !u!114 &2734373134951606938
 MonoBehaviour:

@@ -77,7 +77,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 10
-  m_Sprite: {fileID: 21300000, guid: 8bc576cf7ca33c3408eb58ed33d2bd20, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c406f439d0933d94299c49cb2037486c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -203,17 +203,23 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: d8e01dc6bc6f64c4482ff901467e37ea, type: 2}
-  - {fileID: 2100000, guid: 50a3dedbdd6969c4a9bdd0e8d5132ec5, type: 2}
-  - {fileID: 2100000, guid: d8e01dc6bc6f64c4482ff901467e37ea, type: 2}
-  - {fileID: 2100000, guid: 50a3dedbdd6969c4a9bdd0e8d5132ec5, type: 2}
-  - {fileID: 2100000, guid: d8e01dc6bc6f64c4482ff901467e37ea, type: 2}
-  - {fileID: 2100000, guid: 50a3dedbdd6969c4a9bdd0e8d5132ec5, type: 2}
-  - {fileID: 2100000, guid: d8e01dc6bc6f64c4482ff901467e37ea, type: 2}
-  - {fileID: 2100000, guid: 50a3dedbdd6969c4a9bdd0e8d5132ec5, type: 2}
-  - {fileID: 2100000, guid: d8e01dc6bc6f64c4482ff901467e37ea, type: 2}
-  - {fileID: 2100000, guid: 50a3dedbdd6969c4a9bdd0e8d5132ec5, type: 2}
-  - {fileID: 2100000, guid: d8e01dc6bc6f64c4482ff901467e37ea, type: 2}
+  - {fileID: 2100000, guid: 0d40b5d64860e904f9e34a4a07c82f91, type: 2}
+  - {fileID: 2100000, guid: f16eb3aac6eb9d146a76072132467be2, type: 2}
+  - {fileID: 2100000, guid: 0d40b5d64860e904f9e34a4a07c82f91, type: 2}
+  - {fileID: 2100000, guid: f16eb3aac6eb9d146a76072132467be2, type: 2}
+  - {fileID: 2100000, guid: 0d40b5d64860e904f9e34a4a07c82f91, type: 2}
+  - {fileID: 2100000, guid: f16eb3aac6eb9d146a76072132467be2, type: 2}
+  - {fileID: 2100000, guid: 0d40b5d64860e904f9e34a4a07c82f91, type: 2}
+  - {fileID: 2100000, guid: f16eb3aac6eb9d146a76072132467be2, type: 2}
+  - {fileID: 2100000, guid: 0d40b5d64860e904f9e34a4a07c82f91, type: 2}
+  - {fileID: 2100000, guid: f16eb3aac6eb9d146a76072132467be2, type: 2}
+  - {fileID: 2100000, guid: 0d40b5d64860e904f9e34a4a07c82f91, type: 2}
+  - {fileID: 2100000, guid: f16eb3aac6eb9d146a76072132467be2, type: 2}
+  - {fileID: 2100000, guid: 0d40b5d64860e904f9e34a4a07c82f91, type: 2}
+  - {fileID: 2100000, guid: f16eb3aac6eb9d146a76072132467be2, type: 2}
+  - {fileID: 2100000, guid: 0d40b5d64860e904f9e34a4a07c82f91, type: 2}
+  - {fileID: 2100000, guid: f16eb3aac6eb9d146a76072132467be2, type: 2}
+  - {fileID: 2100000, guid: 0d40b5d64860e904f9e34a4a07c82f91, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -247,7 +253,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d247ba06193faa74d9335f5481b2b56c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skeletonDataAsset: {fileID: 11400000, guid: c70b2809dc6a5144cbdfa3bf2fb6f8b6, type: 2}
+  skeletonDataAsset: {fileID: 11400000, guid: 90dcb736d91efac4989faa1642a8b657, type: 2}
   initialSkinName: 
   fixPrefabOverrideViaMeshFilter: 2
   initialFlipX: 0
@@ -270,7 +276,7 @@ MonoBehaviour:
     materialsInsideMask: []
     materialsOutsideMask: []
   disableRenderingOnOverride: 1
-  _animationName: win
+  _animationName: WIN
   loop: 1
   timeScale: 1
 --- !u!33 &512600758801645860
@@ -294,7 +300,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spineGameObject: {fileID: 8938934181479255688}
-  startAnimation: win
+  startAnimation: WIN
   isLooping: 1
 --- !u!114 &2734373134951606938
 MonoBehaviour:

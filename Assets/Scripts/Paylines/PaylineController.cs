@@ -4,12 +4,14 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Payline = Data.Payline;
+using VisualizedPaylines = SlotMachineEngine.Payline;
 
 public class PaylineController : MonoSingleton<PaylineController>
 {
     [SerializeField] private PaylineWinning paylineWinning;
     public GameObject ReelTint;
-    public Payline Payline;
+    public VisualizedPaylines normalPayline;
     public SpecialPayline scatterPayline;
     public SpecialPayline bonusPayline;
 
@@ -41,6 +43,11 @@ public class PaylineController : MonoSingleton<PaylineController>
         StopAllCoroutines();
     }
 
+    public void GeneratePayline(Payline data)
+    {
+        var payline = new VisualizedPaylines(data.paylineId, data.symbol, data.positions, data.symbolCount, data.won);
+        normalPayline = payline;
+    }
     public void ShowTotalWinAmountVisuals(double currentspincreditwon)
     {
         if (CurrentPayLineState == PayLineState.FirstIteration)
@@ -59,7 +66,7 @@ public class PaylineController : MonoSingleton<PaylineController>
         AnimatePaylineAndSymbols();
         yield return WaitTimeForPayLine(CurrentPayLineState);
         StopWinAnimation();
-        HidePayline(Payline.ID);
+        HidePayline(normalPayline.ID);
     }
 
     private WaitForSeconds WaitTimeForPayLine(PayLineState paylinestate)
@@ -70,13 +77,13 @@ public class PaylineController : MonoSingleton<PaylineController>
         }
         else
         {
-            Payline payline = Payline;
+            VisualizedPaylines payline = normalPayline;
             PlaySymbolSound(payline);
             return new WaitForSeconds(ReelManager.Instance.SystemConfig.ShowPaylineDuration);
         }
     }
 
-    private static void PlaySymbolSound(Payline payline)
+    private static void PlaySymbolSound(VisualizedPaylines payline)
     {
         var symbolPrefabs = ReelManager.Instance.SystemConfig.SymbolPrefabs;
         Symbol payoutSymbol = symbolPrefabs[payline.PAYOUTSYMBOLID];
@@ -85,7 +92,7 @@ public class PaylineController : MonoSingleton<PaylineController>
 
     private void AnimatePaylineAndSymbols()
     {
-        var payline = Payline;
+        var payline = normalPayline;
 
         for (int i = 0; i < payline.SYMBOLSCOUNT; i++)
         {

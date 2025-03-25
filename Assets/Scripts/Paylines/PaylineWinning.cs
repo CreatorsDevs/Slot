@@ -35,12 +35,12 @@ public class PaylineWinning : MonoBehaviour
 
     public void ShowPayline(int paylineId)
     {
-        paylines[paylineId].SetActive(true);
+        paylines[0].SetActive(true);
     }
 
     public void HidePayline(int id)
     {
-        paylines[id].SetActive(false);
+        paylines[0].SetActive(false);
     }
 
     public void HidePayline()

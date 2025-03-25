@@ -1,3 +1,4 @@
+using Data;
 using System.Collections;
 using UnityEngine;
 
@@ -69,8 +70,10 @@ namespace FSM.GameState
 
         private bool HasNormalPayLine()
         {
+            Payline paylineData = RNG.Instance.payline;
             if (RNG.Instance.payline.won > 0)
             {
+                PaylineController.Instance.GeneratePayline(paylineData);
                 SetTotalAmount(RNG.Instance.payline.won);
                 return true;
             }
