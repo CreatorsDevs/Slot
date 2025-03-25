@@ -54,6 +54,63 @@ public class UIManager : MonoBehaviour
         EventManager.DisableSlamStopEvent += DisableSlamStopButton;
         EventManager.SetButtonForSpinEvent += SetButtonForStartingSpin;
         EventManager.OnClickResetDataEvent += ResetWinAndDisableSlamStop;
+        EventManager.WinAmountEvent += WinAmount;
+        EventManager.OnUpdateCurrentBalanceEvent += UpdateBalanceAmount;
+    }
+
+    public void SetUIOnStart()
+    {
+        UpdateCreditValue();
+        SetInitialBalance();
+    }
+
+    public void UpdateCreditValue()
+    {
+        landscapeCurrentBet.text = (GameConstants.creditValue[currentBetIndex] * BetManager.Instance.Bet).ToString("F2");
+        portraitCurrentBet.text = (GameConstants.creditValue[currentBetIndex] * BetManager.Instance.Bet).ToString("F2");
+        EventManager.InvokeUpdateCreditValueIndex(currentBetIndex);
+        SetBetButtonInteractivity();
+    }
+
+    public void SetBetButtonInteractivity()
+    {
+        if (currentBetIndex == GameConstants.creditValue.Count - 1)
+        {
+            landscapeUpBtn.interactable = false;
+            portraitUpBtn.interactable = false;
+        }
+        else
+        {
+            landscapeUpBtn.interactable = true;
+            portraitUpBtn.interactable = true;
+        }
+        if (currentBetIndex == 0)
+        {
+            landscapeDownBtn.interactable = false;
+            portraitDownBtn.interactable = false;
+        }
+        else
+        {
+            landscapeDownBtn.interactable = false;
+            portraitDownBtn.interactable = false;
+        }
+    }
+
+    public void OnClickUp()
+    {
+        if (currentBetIndex >= GameConstants.creditValue.Count - 1) return;
+
+        currentBetIndex++;
+        UpdateCreditValue();
+    }
+
+    public void OnClickDown()
+    {
+        if (currentBetIndex > 0)
+        {
+            currentBetIndex--;
+            UpdateCreditValue();
+        }
     }
 
     public void SetInitialBalance()
@@ -110,6 +167,12 @@ public class UIManager : MonoBehaviour
         portraitSlamStopButton.interactable = false;
     }
 
+    private void WinAmount(double amount)
+    {
+        landscapeWinAmount.text = (amount).ToString("F2");
+        portraitWinAmount.text = (amount).ToString("F2");
+    }
+
     private void BalanceDeduction()
     {
         if (GameManager.Instance.CurrentGameState == GameManager.GameStatesType.FreeGame) return;
@@ -124,6 +187,25 @@ public class UIManager : MonoBehaviour
         portraitAvailableBalance.text = balance.ToString("F2");
     }
 
+    private void UpdateBalanceAmount()
+    {
+        double updatedBalance = RNG.Instance.CurrentBalance;
+        landscapeAvailableBalance.text = updatedBalance.ToString("F2");
+        portraitAvailableBalance.text = updatedBalance.ToString("F2");
+    }
+
+    private void OnNormalSpinComplete()
+    {
+        StartCoroutine(OnNormalSpinCompleteRoutine());
+    }
+
+    private IEnumerator OnNormalSpinCompleteRoutine()
+    {
+        yield return null;
+        SetButton(true);
+        SetBetButtonInteractivity();
+    }
+
     public void DisableSlamStopButton()
     {
         landscapeSlamStopButton.interactable = false;
@@ -132,10 +214,13 @@ public class UIManager : MonoBehaviour
 
     private void UnSubscribeEvents()
     {
-        EventManager.BalanceAmountDeductionEvent += BalanceDeduction;
+        EventManager.BalanceAmountDeductionEvent -= BalanceDeduction;
         EventManager.DisableSlamStopEvent -= DisableSlamStopButton;
         EventManager.SetButtonForSpinEvent -= SetButtonForStartingSpin;
         EventManager.OnClickResetDataEvent -= ResetWinAndDisableSlamStop;
+        EventManager.WinAmountEvent -= WinAmount;
+        EventManager.OnUpdateCurrentBalanceEvent -= UpdateBalanceAmount;
+
     }
 
     private void OnDisable()

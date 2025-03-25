@@ -21,6 +21,7 @@ public class Reel : MonoBehaviour
     private float reelTweenEndDuration;
 
     public bool IsSpinning { get => isSpinning; private set => isSpinning = value; }
+    public List<Symbol> OutcomeSymbols { get => outcomeSymbols; }
 
 
     private void Start()

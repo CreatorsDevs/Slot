@@ -21,6 +21,25 @@ public class RNG : MonoSingleton<RNG>
         return matrix;
     }
 
+    public int GetPaylineNumber()
+    {
+        return 20; // payline number
+    }
+    public int GetPaylineCount()
+    {
+        return 1; // payline Count
+    }
+
+    public double GetCurrentSpinTotalWon()
+    {
+        return 200; // Total Win amount for payline
+    }
+
+    public double GetTotalCreditWon()
+    {
+        return 200;
+    }
+
     public void SendSpinRequest()
     {
         SendNormalSpinRequest();

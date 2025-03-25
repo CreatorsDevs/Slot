@@ -19,11 +19,13 @@ public class EventManager
     public static Action SpinResponseEvent;
     public static Action SetButtonForSpinEvent;
     public static Action OnClickResetDataEvent;
-
+    public static Action OnUpdateCurrentBalanceEvent;
 
     // Game Economy Actions
     public static Action<int> UpdateCreditValueIndexEvent;
     public static Action BalanceAmountDeductionEvent;
+    public static Action<double> WinAmountEvent;
+
 
     #endregion
 
@@ -75,5 +77,15 @@ public class EventManager
     public static void InvokeOnClickResetData()
     {
         OnClickResetDataEvent();
+    }
+
+    public static void InvokeWinAmount(double win)
+    {
+        WinAmountEvent(win);
+    }
+
+    public static void InvokeUpdateBalance()
+    {
+        OnUpdateCurrentBalanceEvent();
     }
 }

@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class EconomyManager : MonoBehaviour
@@ -10,5 +9,10 @@ public class EconomyManager : MonoBehaviour
     {
         double currentBalance = RNG.Instance.CurrentBalance;
         return currentBalance >= GameConstants.creditValue[BetManager.Instance.BetIndex] * BetManager.Instance.Bet;
+    }
+
+    public static float GetTruncatedTwoDecimalFloatAmount(double amt)
+    {
+        return (float)(Math.Truncate(amt * 100) / 100);
     }
 }

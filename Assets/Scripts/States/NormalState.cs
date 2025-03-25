@@ -10,11 +10,16 @@ namespace FSM.GameState
         public NormalState(GamePlayStateMachine gamestatemachine) : base(gamestatemachine) { }
         private StateName _nextStateName;
         private bool showPaylineInLoop;
+        private double currentSpinTotalWon;
+        private const int minScatterForFreeGame = 2;
+        private const int minBonusForBonusGame = 2;
+
 
         public override void Enter()
         {
             GameManager.CurrentState = StateName.Normal;
             _nextStateName = StateName.Normal;
+            PaylineController.Instance.SetPayLineState(PayLineState.NotShowing);
             SubscribeEvents();
         }
         private void SubscribeEvents()
@@ -33,6 +38,7 @@ namespace FSM.GameState
             showPaylineInLoop = ReelManager.Instance.SystemConfig.ShowPaylinesInLoop;
             gameStateMachine.StopAllCoroutines();
             ReelManager.Instance.ResetReels();
+            PaylineController.Instance.ResetPayLine();
             EventManager.InvokeOnClickResetData();
             ReelManager.Instance.SpinReels();
         }
@@ -48,7 +54,54 @@ namespace FSM.GameState
         private IEnumerator CheckPaylinesRoutine()
         {
             yield return null;
+            bool normalpayline = HasNormalPayLine();
+            gameStateMachine.StartCoroutine(ShowWinCoroutine(normalpayline));
         }
+
+        private bool HasNormalPayLine()
+        {
+            int paylineNumber = RNG.Instance.GetPaylineNumber();
+            int paylineCount = RNG.Instance.GetPaylineCount();
+
+            if (paylineCount > 0)
+            {
+                SetTotalAmount(RNG.Instance.GetCurrentSpinTotalWon());
+                return true;
+            }
+            else
+                return false;
+        }
+
+        private IEnumerator ShowWinCoroutine(bool normalpayline)
+        {
+            bool hasShownPaylineOnce = false;
+
+            PaylineController.Instance.WinTint.SetActive(true);
+            if (PaylineController.Instance.CurrentPayLineState == PayLineState.NotShowing)
+            {
+                PaylineController.Instance.SetPayLineState(PayLineState.FirstIteration);
+            }
+            if (normalpayline)
+            {
+                hasShownPaylineOnce = true;
+
+                PaylineController.Instance.ShowTotalWinAmountVisuals(currentSpinTotalWon);
+                yield return gameStateMachine.StartCoroutine(PaylineController.Instance.ShowNormalPayline());
+            }
+
+            while (showPaylineInLoop)
+            {
+                    PaylineController.Instance.SetPayLineState(PayLineState.Looping);
+                    yield return gameStateMachine.
+                    StartCoroutine(PaylineController.Instance.ShowNormalPayline());
+            }
+            PaylineController.Instance.SetPayLineState(PayLineState.NotShowing);
+            PaylineController.Instance.WinTint.SetActive(false);
+        }
+
+
+        private void SetTotalAmount(double amount) => currentSpinTotalWon = amount;
+
         public override void Exit()
         {
             GameManager.IsSlamStop = false;
