@@ -23,7 +23,6 @@ public class GameManager : MonoSingleton<GameManager>
 
     private void OnEnable()
     {
-        StartGame();
         EventManager.OnSpinClickedEvent += OnSpinClicked;
         EventManager.OnScatterPaylineStopped += OnScatterPaylineStopped;
         EventManager.OnBonusPaylineStopped += OnBonusPaylineStopped;
@@ -31,6 +30,7 @@ public class GameManager : MonoSingleton<GameManager>
 
     private void Start()
     {
+        StartGame();
         symbolPool.CreateSymbolPool();
         reelManager.SetReels();
     }
