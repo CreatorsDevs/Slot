@@ -76,7 +76,7 @@ public class ReelManager : MonoSingleton<ReelManager>
 
     public void SetReelsForAnticipation()
     {
-        List<List<int>> matrix = RNG.Instance.GetMatrix();
+        List<List<int>> matrix = RNG.Instance.playData.matrix;
         int column = 1;
         int scattercount = 0;
         int bonuscount = 0;
@@ -101,7 +101,7 @@ public class ReelManager : MonoSingleton<ReelManager>
     public void SetOutcomeSymbols()
     {
         for (int i = 0; i < reels.Count; i++)
-            reels[i].SetOutcomeSymbol(RNG.Instance.GetMatrix()[i]);
+            reels[i].SetOutcomeSymbol(RNG.Instance.playData.matrix[i]);
     }
 
     public IEnumerator StopReelsWithSpecialSymbol(Reel reel, float anticipationDelay)

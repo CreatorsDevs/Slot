@@ -27,6 +27,12 @@ namespace SlotMachineEngine
     [Serializable]
     public class SpecialPayline
     {
-        
+        public readonly int[] SPECIALSYMBOLPOSITIONS;
+        private SpecialPayline() { }
+        public SpecialPayline(int[] specialSymbolPositions)
+        {
+            SPECIALSYMBOLPOSITIONS = new int[specialSymbolPositions.Length];
+            SPECIALSYMBOLPOSITIONS = specialSymbolPositions;
+        }
     }
 }

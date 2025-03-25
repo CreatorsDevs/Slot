@@ -115,7 +115,8 @@ public class UIManager : MonoBehaviour
 
     public void SetInitialBalance()
     {
-        double balance = GameManager.Instance.rng.CurrentBalance;
+        RNG.Instance.SetCurrentBalance();
+        double balance = RNG.Instance.CurrentBalance;
         landscapeAvailableBalance.text = balance.ToString("F2");
         portraitAvailableBalance.text = balance.ToString("F2");
         EventManager.InvokeCurrentBetUpdateFunctionality(GameConstants.creditValue[currentBetIndex] * BetManager.Instance.Bet);
@@ -123,6 +124,7 @@ public class UIManager : MonoBehaviour
 
     public void OnSpinButtonClicked()
     {
+        RNG.Instance.SpinTheReel();
         if (EconomyManager.HasSufficientbalance())
         {
             ResetWinAndDisableSlamStop();
