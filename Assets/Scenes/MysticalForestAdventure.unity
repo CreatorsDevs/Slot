@@ -8468,6 +8468,8 @@ MonoBehaviour:
   reelManager: {fileID: 2006350776}
   loadingBar: {fileID: 1426867647}
   uiManager: {fileID: 602573196}
+  BaseBG: {fileID: 280411043}
+  FreeBG: {fileID: 790487284}
   gamePlayStateMachine: {fileID: 205731400}
   rng: {fileID: 493924618}
 --- !u!1 &973771081

@@ -65,7 +65,6 @@ public class UIManager : MonoBehaviour
         EventManager.OnFreeSpinPlayed += CurrentSpin;
         EventManager.ScatterStateStartedEvent += EnableFreeGameTextUI;
         EventManager.NormalStateStartedEvent += DisableFreeGameTextUI;
-        EventManager.NormalStateStartedEvent += SetButtonForReturningToNormalState;
     }
 
     public void EnableFreeGameTextUI()
@@ -256,6 +255,7 @@ public class UIManager : MonoBehaviour
         EventManager.ScatterStateStartedEvent -= EnableFreeGameTextUI;
         EventManager.NormalStateStartedEvent -= DisableFreeGameTextUI;
         EventManager.NormalStateStartedEvent -= SetButtonForReturningToNormalState;
+        EventManager.ScatterStateStartedEvent -= SetButtonForReturningToNormalState;
 
     }
 

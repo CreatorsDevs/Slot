@@ -8,6 +8,8 @@ public class GameManager : MonoSingleton<GameManager>
     [SerializeField] private ReelManager reelManager;
     [SerializeField] private LoadingBar loadingBar;
     [SerializeField] private UIManager uiManager;
+    [SerializeField] private GameObject BaseBG;
+    [SerializeField] private GameObject FreeBG;
 
     [Header("Public Fields!")]
     public GamePlayStateMachine gamePlayStateMachine;
@@ -26,6 +28,8 @@ public class GameManager : MonoSingleton<GameManager>
         EventManager.OnSpinClickedEvent += OnSpinClicked;
         EventManager.OnScatterPaylineStopped += OnScatterPaylineStopped;
         EventManager.OnBonusPaylineStopped += OnBonusPaylineStopped;
+        EventManager.ScatterStateStartedEvent += EnableFreeGameBG;
+        EventManager.NormalStateStartedEvent += DisableFreeGameBG;
     }
 
     private void Start()
@@ -50,6 +54,17 @@ public class GameManager : MonoSingleton<GameManager>
         EconomyManager.OnUpdateCurrentBalance();
     }
 
+    private void EnableFreeGameBG()
+    {
+        BaseBG.SetActive(false);
+        FreeBG.SetActive(true);
+    }
+
+    private void DisableFreeGameBG()
+    {
+        BaseBG.SetActive(true);
+        FreeBG.SetActive(false);
+    }
     public void ResetSlamStop()
     {
         IsSlamStop = false;
@@ -106,6 +121,8 @@ public class GameManager : MonoSingleton<GameManager>
         EventManager.OnSpinClickedEvent -= OnSpinClicked;
         EventManager.OnScatterPaylineStopped -= OnScatterPaylineStopped;
         EventManager.OnBonusPaylineStopped -= OnBonusPaylineStopped;
+        EventManager.ScatterStateStartedEvent -= EnableFreeGameBG;
+        EventManager.NormalStateStartedEvent -= DisableFreeGameBG;
     }
 }
 

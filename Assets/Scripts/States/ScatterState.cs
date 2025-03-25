@@ -15,6 +15,8 @@ namespace FSM.GameState
 
         public override void Enter()
         {
+            AudioManager.Instance.StopMusic(Music.Bgm);
+            AudioManager.Instance.PlayMusic(Music.FreeBgm);
             GameManager.CurrentState = StateName.Scatter;
             EventManager.InvokeScatterStateStartedEvent();
             SubscribeEvents();
@@ -31,6 +33,7 @@ namespace FSM.GameState
         private void InitializeGamestate()
         {
             remainingFreeSpin = RNG.Instance.RemainingFreeSpins();
+
         }
 
         private IEnumerator StartFreeSpinWithDelay(float delay)
@@ -139,6 +142,8 @@ namespace FSM.GameState
         }
         public override void Exit()
         {
+            AudioManager.Instance.StopMusic(Music.Bgm);
+            AudioManager.Instance.PlayMusic(Music.FreeBgm);
             EventManager.InvokeNormalStateStartedEvent();
             UnSubscribeEvents();
         }
